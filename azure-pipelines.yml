@@ -14,4 +14,4 @@ variables:
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build HotelSystem_Frontend/$(buildConfiguration)'
+  displayName: 'dotnet build HotelSystem_Frontend/HotelSystem_Frontend/$(buildConfiguration)'
