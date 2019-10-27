@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ServiceModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ServiceProxy;
 
 namespace HotelSystem_Frontend
 {
@@ -30,8 +27,16 @@ namespace HotelSystem_Frontend
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-
+            services.AddScoped(sp =>
+            {
+                // TODO actually use this instead of having a default
+                // TODO binding should also be bassed in
+                var conf = sp.GetService<IConfiguration>();
+                var serviceUrl = (string)conf.GetValue(typeof(string), "hotelServiceUrl", "http://localhost:60060/ImplementingServiceHotel.svc");
+                var binding = new BasicHttpBinding();
+                var address = new EndpointAddress(serviceUrl);
+                return new HotelServiceClient(binding, address);
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

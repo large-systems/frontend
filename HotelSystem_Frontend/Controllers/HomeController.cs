@@ -1,17 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using HotelSystem_Frontend.Models;
+using ServiceProxy;
 
 namespace HotelSystem_Frontend.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly HotelServiceClient _hotelClient;
+
+        public HomeController(HotelServiceClient hotelClient)
         {
+            _hotelClient = hotelClient;
+        }
+
+        [HttpGet]
+        public IActionResult Index([FromQuery]string query = null)
+        {
+            if (query != null)
+            {
+                ViewData.Add("response", _hotelClient.EchoTest(query));
+            }
             return View();
         }
 

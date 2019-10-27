@@ -2,4 +2,14 @@
     ViewData["Title"] = "Home Page";
 }
 
+<form class="form-horizontal">
 
+        @if (ViewData.ContainsKey("response"))
+        {
+            <h3>@ViewData["response"]</h3>
+        }
+    <div class="form-group">
+        <input class="form-control" name="query" placeholder="Talk to me" required="1" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
