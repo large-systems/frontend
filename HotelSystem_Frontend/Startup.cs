@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using DummyInMemoryService;
 using HotelInterface.Interface;
 using Microsoft.AspNetCore.Builder;
@@ -13,9 +14,13 @@ namespace HotelSystem_Frontend
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-            Configuration = configuration;
+            string localConfig = env.ContentRootPath + "/appsettings.local.json";
+            Configuration = new ConfigurationBuilder()
+                .AddConfiguration(configuration)
+                .AddJsonFile(localConfig, false)
+                .Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -23,22 +28,14 @@ namespace HotelSystem_Frontend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(Configuration); // Override the default Config
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddScoped<IServiceHotel>(sp =>
-            {
-                // TODO actually use this instead of having a default
-                // TODO binding should also be bassed in
-                var conf = sp.GetService<IConfiguration>();
-                var serviceUrl = (string)conf.GetValue(typeof(string), "hotelServiceUrl", "http://localhost:60060/ImplementingServiceHotel.svc");
-                var binding = new BasicHttpBinding();
-                var address = new EndpointAddress(serviceUrl);
-                return new HotelService();
-            });
+            services.AddScoped<IServiceHotel>(this.ResolveHotelService);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -65,6 +62,22 @@ namespace HotelSystem_Frontend
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private IServiceHotel ResolveHotelService(IServiceProvider serviceProvider)
+        {
+            var serviceUrl = (string)Configuration.GetValue(typeof(string), "hotelServiceUrl");
+            if (string.IsNullOrEmpty(serviceUrl))
+            {
+                return new HotelService();
+            }
+            else
+            {
+                // TODO binding should also be bassed in from config
+                var binding = new BasicHttpBinding();
+                var address = new EndpointAddress(serviceUrl);
+                return new HotelServiceClient(binding, address);
+            }
         }
     }
 }
