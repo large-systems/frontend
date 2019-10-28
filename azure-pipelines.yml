@@ -18,7 +18,7 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'restore'
-    restoreSolution: '**/*.sln'
+    restoreSolution: 'HotelSystem_Frontend/HotelSystem_Frontend.sln'
     feedsToUse: 'config'
     nugetConfigPath: 'NuGet.Config'
     
