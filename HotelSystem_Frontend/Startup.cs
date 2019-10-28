@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using DummyInMemoryService;
 using HotelInterface.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,7 +37,7 @@ namespace HotelSystem_Frontend
                 var serviceUrl = (string)conf.GetValue(typeof(string), "hotelServiceUrl", "http://localhost:60060/ImplementingServiceHotel.svc");
                 var binding = new BasicHttpBinding();
                 var address = new EndpointAddress(serviceUrl);
-                return new HotelServiceClient(binding, address);
+                return new HotelService();
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
