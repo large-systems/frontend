@@ -27,8 +27,8 @@ steps:
   inputs:
     solution: 'HotelSystem_Frontend/ServiceProxy/*.csproj'
     
-- script: dotnet build --configuration Release --no-restore HotelSystem_Frontend/DummyInMemoryService/DummyInMemoryService.csproj
+- script: dotnet build --configuration Release --no-restore DummyInMemoryService/DummyInMemoryService.csproj
   displayName: 'dotnet build'
 
-- script: dotnet build --configuration Release --no-restore HotelSystem_Frontend/HotelSystem_Frontend/HotelSystem_Frontend.csproj
+- script: dotnet build --configuration Release --no-restore HotelSystem_Frontend/HotelSystem_Frontend.csproj
   displayName: 'dotnet build'
