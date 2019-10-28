@@ -12,15 +12,16 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  solution: 'HotelSystem_Frontend/HotelSystem_Frontend.sln'
 
 
 steps:
 - task: NuGetCommand@2
   inputs:
     command: 'restore'
-    restoreSolution: 'HotelSystem_Frontend/HotelSystem_Frontend.sln'
+    restoreSolution: $(solution)
     feedsToUse: 'config'
     nugetConfigPath: 'NuGet.Config'
     
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build HotelSystem_Frontend/HotelSystem_Frontend.sln'
+- script: dotnet build --configuration $(buildConfiguration) --no-restore
+  displayName: 'dotnet build $(solution)'
