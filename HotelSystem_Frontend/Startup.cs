@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using HotelInterface.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,7 +28,7 @@ namespace HotelSystem_Frontend
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddScoped(sp =>
+            services.AddScoped<IServiceHotel>(sp =>
             {
                 // TODO actually use this instead of having a default
                 // TODO binding should also be bassed in

@@ -1,16 +1,13 @@
-﻿using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.Threading.Tasks;
+﻿using HotelInterface.Interface;
 using Microsoft.AspNetCore.Mvc;
-using ServiceProxy;
 
 namespace HotelSystem_Frontend.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly HotelServiceClient _hotelClient;
+        private readonly IServiceHotel _hotelClient;
 
-        public HomeController(HotelServiceClient hotelClient)
+        public HomeController(IServiceHotel hotelClient)
         {
             _hotelClient = hotelClient;
         }
