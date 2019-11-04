@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using DummyInMemoryService;
 using HotelInterface.Interface;
@@ -8,19 +9,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ServiceProxy;
 
 namespace HotelSystem_Frontend
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            string localConfig = env.ContentRootPath + "/appsettings.local.json";
-            Configuration = new ConfigurationBuilder()
-                .AddConfiguration(configuration)
-                .AddJsonFile(localConfig, false)
-                .Build();
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -28,7 +26,6 @@ namespace HotelSystem_Frontend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(Configuration); // Override the default Config
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
