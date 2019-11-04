@@ -1,0 +1,81 @@
+﻿@using HotelInterface.DTOs;
+@model BookingDetails
+@{
+
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HotelModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Arrival)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Arrival)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfRooms)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfRooms)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model._numberOfGuests)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model._numberOfGuests)
+        </dd>
+    </dl>
+</div>
+@if (Model.ListOfRoomsDetails != null)
+{
+    <div>
+        <h4>Booked rooms</h4>
+        <hr />
+        <table class="table table-striped">
+            <tr>
+                <th>@Html.DisplayNameForInnerType((RoomDetails room) => room.ID)</th>
+                <th>@Html.DisplayNameForInnerType((RoomDetails room) => room.RoomNumber)</th>
+                <th>@Html.DisplayNameForInnerType((RoomDetails room) => room.RoomType)</th>
+                <th>@Html.DisplayNameForInnerType((RoomDetails room) => room.Capacity)</th>
+                <th>@Html.DisplayNameForInnerType((RoomDetails room) => room.Price)</th>
+            </tr>
+            @foreach (var room in Model.ListOfRoomsDetails)
+            {
+                <tr>
+                    <td>@room.ID</td>
+                    <td>@room.RoomNumber</td>
+                    <td>@room.RoomType</td>
+                    <td>@room.Capacity</td>
+                    <td>@room.Price</td>
+                </tr>
+            }
+        </table>
+    </div>
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

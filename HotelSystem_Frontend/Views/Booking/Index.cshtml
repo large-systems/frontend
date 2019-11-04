@@ -1,0 +1,72 @@
+﻿@model IEnumerable<HotelInterface.DTOs.BookingDetails>
+
+@{
+    ViewData["Title"] = "Show";
+}
+
+<h2>Search by passport number</h2>
+
+@if (ViewData.ContainsKey("error") || TempData.ContainsKey("error"))
+{
+<div class="row alert alert-danger">
+    @if (ViewData.ContainsKey("error"))
+    {
+        <p>@ViewData["error"]</p>
+    }
+    @if (TempData.ContainsKey("error"))
+    {
+        <p>@TempData["error"]</p>
+    }
+</div>
+}
+
+@if (Model != null && Model.Count() == 0)
+{
+    <div class="alert alert-warning">No bookings found</div>
+}
+
+
+@using (Html.BeginForm("Index", "Booking", FormMethod.Get, new { @class = "form-inline" }))
+{
+    <div class="form-group">
+        <label for="passportNumber">Passport number:</label>
+        <input type="number" name="passportNumber" id="passportNumber" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Search</button>
+    <a asp-action="Create"><button type="button" class="btn btn-primary">Create New</button></a>
+}
+
+
+@if (Model != null && Model.Count() > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>@Html.DisplayNameFor(model => model.StartDate)</th>
+                <th>@Html.DisplayNameFor(model => model.EndDate)</th>
+                <th>@Html.DisplayNameFor(model => model.NumberOfRooms)</th>
+                <th>@Html.DisplayNameFor(model => model.Arrival)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                    <th>@Html.DisplayFor(modelItem => item.StartDate)</th>
+                    <th>@Html.DisplayFor(modelItem => item.EndDate)</th>
+                    <th>@Html.DisplayFor(modelItem => item.NumberOfRooms)</th>
+                    <th>@Html.DisplayFor(modelItem => item.Arrival)</th>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                        @Html.ActionLink("Cancel", "Cancel", new { id=item.ID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

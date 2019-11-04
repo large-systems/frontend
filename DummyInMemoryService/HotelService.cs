@@ -20,6 +20,23 @@ namespace DummyInMemoryService
                     EndDate = new DateTime(2020, 04, 15),
                     NumberOfRooms = 5,
                     Arrival = new DateTime(2020, 01, 16),
+                    ListOfRoomsDetails = new List<RoomDetails>(new RoomDetails[]
+                    {
+                        new RoomDetails(12)
+                        {
+                            RoomNumber = 101,
+                            Capacity= 1,
+                            Price = 150,
+                            RoomType = "Economy",
+                        },
+                        new RoomDetails(51)
+                        {
+                            RoomNumber = 102,
+                            Capacity= 4,
+                            Price = 300,
+                            RoomType = "Economy",
+                        }
+                    })
                 },
                 new BookingDetails(5)
                 {
