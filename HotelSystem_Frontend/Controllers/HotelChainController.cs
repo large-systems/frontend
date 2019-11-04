@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HotelInterface.DTOs;
 using HotelInterface.Interface;
 using HotelSystem_Frontend.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,7 @@ namespace HotelSystem_Frontend.Controllers
             {
                 return View("Index");
             }
-            _hotelClient.AddNewHotel(hotelModel.Name, hotelModel.City, hotelModel.Address, new HotelSystem.DTOs.HotelChainIdentifier(hotelModel.HotelChainIdentifier)); //Maybe tryParse?
+            _hotelClient.AddNewHotel(hotelModel.Name, hotelModel.City, hotelModel.Address, new HotelChainIdentifier(hotelModel.HotelChainIdentifier)); //Maybe tryParse?
             TempData["message"] = $"Successfully created Hotel with an identifier: {hotelModel.HotelChainIdentifier}";
             return RedirectToAction("Index");
         }
