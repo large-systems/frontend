@@ -77,7 +77,7 @@ namespace DummyInMemoryService
 
         public string EchoTest(string input)
         {
-            throw new NotImplementedException();
+            return String.Format("Dummy temporary local development service says: {0}", input);
         }
 
         public BookingDetails FindBookingByid(BookingIdentifier bookingIdentifier)
