@@ -63,7 +63,7 @@ namespace HotelSystem_Frontend.Controllers
             return View();
         }
         
-        [Route("{id}/cancel")]
+        [Route("cancel/{id}")]
         public IActionResult Create([FromRoute(Name ="id")]int id)
         {
             try
