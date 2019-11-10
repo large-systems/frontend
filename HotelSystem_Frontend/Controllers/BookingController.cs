@@ -63,5 +63,22 @@ namespace HotelSystem_Frontend.Controllers
             return View();
         }
         
+        [Route("{id}/cancel")]
+        public IActionResult Create([FromRoute(Name ="id")]int id)
+        {
+            try
+            {
+                _hotelClient.CancelBooking(new BookingIdentifier(id));
+                TempData["success"] = "Booking was cancelled successfully";
+            }
+            catch(FaultException e) when 
+                (e is FaultException<BookingNotFoundException> 
+                || e is FaultException<BookingCancelledAllreadyException>)
+            {
+                TempData["error"] = "Booking not found or already cancelled";
+                
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

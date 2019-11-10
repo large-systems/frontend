@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    <div class="alerts">
+        @if (ViewData.ContainsKey("error") || TempData.ContainsKey("error"))
+        {
+            <div class="alert alert-danger">
+                @if (ViewData.ContainsKey("error"))
+                {
+                    <p>@ViewData["error"]</p>
+                }
+                @if (TempData.ContainsKey("error"))
+                {
+                    <p>@TempData["error"]</p>
+                }
+            </div>
+        }
+
+        @if (ViewData.ContainsKey("success") || TempData.ContainsKey("success"))
+        {
+            <div class="alert alert-success">
+                @if (ViewData.ContainsKey("success"))
+                {
+                    <p>@ViewData["success"]</p>
+                }
+                @if (TempData.ContainsKey("success"))
+                {
+                    <p>@TempData["success"]</p>
+                }
+            </div>
+        }
+
+        @if (ViewData.ContainsKey("warning") || TempData.ContainsKey("warning"))
+        {
+            <div class="alert alert-success">
+                @if (ViewData.ContainsKey("warning"))
+                {
+                    <p>@ViewData["warning"]</p>
+                }
+                @if (TempData.ContainsKey("warning"))
+                {
+                    <p>@TempData["warning"]</p>
+                }
+            </div>
+        }
+    </div>

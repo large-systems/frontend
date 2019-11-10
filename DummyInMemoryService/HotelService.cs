@@ -1,7 +1,9 @@
 ﻿using HotelInterface.DTOs;
 using HotelInterface.Interface;
+using HotelSystem.Exception;
 using System;
 using System.Collections.Generic;
+using System.ServiceModel;
 
 namespace DummyInMemoryService
 {
@@ -9,9 +11,9 @@ namespace DummyInMemoryService
     {
         private List<HotelChainIdentifier> hotelList = new List<HotelChainIdentifier>();
 
-        private Dictionary<int, List<BookingDetails>> bookings = new Dictionary<int, List<BookingDetails>>();
+        private static Dictionary<int, List<BookingDetails>> bookings = new Dictionary<int, List<BookingDetails>>();
 
-        public HotelService()
+        static HotelService()
         {
             bookings.Add(541, new List<BookingDetails>(new BookingDetails[]
             {
@@ -38,7 +40,7 @@ namespace DummyInMemoryService
                         }
                     })
                 },
-                new BookingDetails(5)
+                new BookingDetails(55)
                 {
                     StartDate = new DateTime(2020, 6, 15),
                     EndDate = new DateTime(2020, 8, 15),
@@ -55,7 +57,17 @@ namespace DummyInMemoryService
 
         public void CancelBooking(BookingIdentifier bookingIdentifier)
         {
-            throw new NotImplementedException();
+            foreach (var passport in bookings.Keys)
+            {
+                var passportBookings = bookings[passport];
+                var idx = passportBookings.FindIndex(b => b.Equals(bookingIdentifier));
+                if (idx != -1)
+                {
+                    passportBookings.RemoveAt(idx);
+                    return;
+                }
+            }
+            throw new FaultException<BookingNotFoundException>(new BookingNotFoundException());
         }
 
         public bool CreateBooking(DateTime startDate, DateTime endDate, int numberGuest, List<RoomIdentifier> listOfRooms, int passportNumber, string guestNumber)
