@@ -57,7 +57,7 @@ namespace HotelSystem_Frontend
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{id?}/{action=Index}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
 
