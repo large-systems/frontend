@@ -16,13 +16,13 @@ variables:
 
 
 steps:
-- task: NuGetCommand@2
+
+- task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
-    restoreSolution: $(solution)
     feedsToUse: 'config'
     nugetConfigPath: 'NuGet.Config'
-    
+
 - task: MSBuild@1
   inputs:
     solution: 'HotelSystem_Frontend/ServiceProxy/*.csproj'
