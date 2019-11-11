@@ -42,7 +42,7 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'Interface-binaries'
+    ArtifactName: 'Frontend-binaries'
     publishLocation: 'Container'
     
 #- script: dotnet build --configuration Release --no-restore DummyInMemoryService/DummyInMemoryService.csproj
