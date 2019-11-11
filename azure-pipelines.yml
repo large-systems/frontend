@@ -12,7 +12,7 @@ pool:
 
 variables:
   configuration: 'Release'
-  solution: 'HotelSystem_Frontend/HotelSystem_Frontend.sln'
+  solution: 'HotelSystem_Frontend.sln'
 
 
 steps:
@@ -23,10 +23,6 @@ steps:
     feedsToUse: 'config'
     nugetConfigPath: 'NuGet.Config'
     restoreDirectory: 'packages'
-
-- task: MSBuild@1
-  inputs:
-    solution: 'HotelSystem_Frontend/ServiceProxy/*.csproj'
 
 - task: MSBuild@1
   inputs:
