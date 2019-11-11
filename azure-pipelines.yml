@@ -20,7 +20,7 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'restore'
-    restoreSolution: '$(solution)'
+    restoreSolution: 'ServiceProxy/ServiceProxy.csproj'
     feedsToUse: 'config'
     nugetConfigPath: 'NuGet.Config'
 
