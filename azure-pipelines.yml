@@ -35,9 +35,9 @@ steps:
     command: 'build'
     projects: '**/*.csproj'
 
-#- task: MSBuild@1
-#  inputs:
-#    solution: 'HotelSystem_Frontend/HotelSystem_Frontend.csproj'
+- task: MSBuild@1
+  inputs:
+    solution: 'HotelSystem_Frontend.sln'
     
 #- script: dotnet build --configuration Release --no-restore DummyInMemoryService/DummyInMemoryService.csproj
 #  displayName: 'dotnet build'
