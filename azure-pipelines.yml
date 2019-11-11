@@ -22,6 +22,7 @@ steps:
     command: 'restore'
     feedsToUse: 'config'
     nugetConfigPath: 'NuGet.Config'
+    restoreDirectory: 'packages'
 
 - task: MSBuild@1
   inputs:
