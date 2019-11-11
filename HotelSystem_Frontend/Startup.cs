@@ -1,4 +1,7 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ServiceModel;
+using DummyInMemoryService;
 using HotelInterface.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ServiceProxy;
 
 namespace HotelSystem_Frontend
@@ -28,16 +32,7 @@ namespace HotelSystem_Frontend
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddScoped<IServiceHotel>(sp =>
-            {
-                // TODO actually use this instead of having a default
-                // TODO binding should also be bassed in
-                var conf = sp.GetService<IConfiguration>();
-                var serviceUrl = (string)conf.GetValue(typeof(string), "hotelServiceUrl", "http://localhost:60060/ImplementingServiceHotel.svc");
-                var binding = new BasicHttpBinding();
-                var address = new EndpointAddress(serviceUrl);
-                return new HotelServiceClient(binding, address);
-            });
+            services.AddScoped<IServiceHotel>(this.ResolveHotelService);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -50,7 +45,7 @@ namespace HotelSystem_Frontend
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
@@ -64,6 +59,22 @@ namespace HotelSystem_Frontend
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private IServiceHotel ResolveHotelService(IServiceProvider serviceProvider)
+        {
+            var serviceUrl = (string)Configuration.GetValue(typeof(string), "hotelServiceUrl");
+            if (string.IsNullOrEmpty(serviceUrl))
+            {
+                return new HotelService();
+            }
+            else
+            {
+                // TODO binding should also be bassed in from config
+                var binding = new BasicHttpBinding();
+                var address = new EndpointAddress(serviceUrl);
+                return new HotelServiceClient(binding, address);
+            }
         }
     }
 }

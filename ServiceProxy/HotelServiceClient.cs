@@ -1,6 +1,5 @@
 ﻿using HotelInterface.DTOs;
 using HotelInterface.Interface;
-using HotelSystem.DTOs;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;

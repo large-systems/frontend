@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@{
+    string serviceUrl = Configuration["hotelServiceUrl"];
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -27,6 +32,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Booking" asp-action="Index">Bookings</a></li>
+                    <li><a asp-area="" asp-controller="HotelChain" asp-action="Index">Create a hotel</a></li>
                 </ul>
             </div>
         </div>
@@ -35,14 +42,18 @@
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content" style="margin-top: 5rem;">
+        <partial name="_AlertsPartial" />
         @RenderBody()
         <hr />
         <footer>
             <p>&copy; 2019 - Hotel System</p>
+            <environment >
+                <p>Current service URL: <a href="@serviceUrl" target="_blank">@(!string.IsNullOrEmpty(serviceUrl) ? serviceUrl : "default")</a></p>
+            </environment>
         </footer>
     </div>
 
-    
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     <environment>
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
