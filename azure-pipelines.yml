@@ -27,6 +27,10 @@ steps:
   inputs:
     solution: 'HotelSystem_Frontend/ServiceProxy/*.csproj'
 
+- task: MSBuild@1
+  inputs:
+    solution: 'HotelSystem_Frontend.sln'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
@@ -34,10 +38,6 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-
-- task: MSBuild@1
-  inputs:
-    solution: 'HotelSystem_Frontend.sln'
     
 #- script: dotnet build --configuration Release --no-restore DummyInMemoryService/DummyInMemoryService.csproj
 #  displayName: 'dotnet build'
