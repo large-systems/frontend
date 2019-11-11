@@ -24,6 +24,13 @@ steps:
     nugetConfigPath: 'NuGet.Config'
     restoreDirectory: 'packages'
 
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '$(solution)'
+    feedsToUse: 'config'
+    nugetConfigPath: 'NuGet.Config'
+
 - task: MSBuild@1
   inputs:
     solution: '$(solution)'
