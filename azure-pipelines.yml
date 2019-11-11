@@ -29,7 +29,15 @@ steps:
 
 - task: MSBuild@1
   inputs:
-    solution: 'HotelSystem_Frontend/HotelSystem_Frontend.csproj'
+    solution: 'HotelSystem_Frontend.sln'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
     
 #- script: dotnet build --configuration Release --no-restore DummyInMemoryService/DummyInMemoryService.csproj
 #  displayName: 'dotnet build'
