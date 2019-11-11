@@ -8,7 +8,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 variables:
   configuration: 'Release'
@@ -17,12 +17,23 @@ variables:
 
 steps:
 
-- task: DotNetCoreCLI@2
+- task: NuGetCommand@2
   inputs:
     command: 'restore'
+    restoreSolution: 'ServiceProxy/ServiceProxy.csproj'
     feedsToUse: 'config'
     nugetConfigPath: 'NuGet.Config'
     restoreDirectory: 'packages'
+
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: '$(solution)'
+    feedsToUse: 'config'
+    nugetConfigPath: 'NuGet.Config'
+    restoreDirectory: 'packages'
+
 
 - task: MSBuild@1
   inputs:
