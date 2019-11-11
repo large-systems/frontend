@@ -35,7 +35,6 @@ steps:
 
 - task: CopyFiles@1
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)'
     Contents: '**/$(configuration)/**/?(*.exe|*.dll|*.pdb)'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
   
