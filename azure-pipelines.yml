@@ -1,4 +1,5 @@
 # ASP.NET Core
+
 # Build and test ASP.NET Core projects targeting .NET Core.
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
@@ -10,8 +11,37 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  buildConfiguration: 'Release'
+  configuration: 'Release'
+  solution: 'HotelSystem_Frontend.sln'
+
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build HotelSystem_Frontend/HotelSystem_Frontend.sln'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    feedsToUse: 'config'
+    nugetConfigPath: 'NuGet.Config'
+    restoreDirectory: 'packages'
+
+- task: MSBuild@1
+  inputs:
+    solution: '$(solution)'
+    configuration: '$(configuration)'
+
+- task: CopyFiles@1
+  inputs:
+    Contents: '**/$(configuration)/**/?(*.exe|*.dll|*.pdb)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'Frontend-binaries'
+    publishLocation: 'Container'
+    
+#- script: dotnet build --configuration Release --no-restore DummyInMemoryService/DummyInMemoryService.csproj
+#  displayName: 'dotnet build'
+
+#- script: dotnet build --configuration Release --no-restore HotelSystem_Frontend/HotelSystem_Frontend.csproj
+#  displayName: 'dotnet build'
