@@ -39,26 +39,11 @@ steps:
     solution: '$(solution)'
     configuration: '$(configuration)'
 
-# ASP.NET Core
-# - task: VSTest@2
-#   inputs:
-#     testSelector: 'testAssemblies'
-#     testAssemblyVer2: |
-#       **\*test*.dll
-#       !**\*TestAdapter.dll
-#       !**\obj\**
-#     searchFolder: '$(System.DefaultWorkingDirectory)'
-
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
     projects: '$(solution)'
-
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'XUnit'
-    testResultsFiles: '**/TEST-*.xml'
+    testRunTitle: 'Frontend  tests'
 
 - task: CopyFiles@1
   inputs:
