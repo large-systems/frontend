@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceProxy", "ServiceProx
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DummyInMemoryService", "DummyInMemoryService\DummyInMemoryService.csproj", "{BA6D41D6-C99C-4D4D-82EF-C291E0D898A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontendTests", "FrontendTests\FrontendTests.csproj", "{ABF4DE7F-5C18-4DE2-94D5-54D972E6F0BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BA6D41D6-C99C-4D4D-82EF-C291E0D898A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA6D41D6-C99C-4D4D-82EF-C291E0D898A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA6D41D6-C99C-4D4D-82EF-C291E0D898A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABF4DE7F-5C18-4DE2-94D5-54D972E6F0BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABF4DE7F-5C18-4DE2-94D5-54D972E6F0BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABF4DE7F-5C18-4DE2-94D5-54D972E6F0BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABF4DE7F-5C18-4DE2-94D5-54D972E6F0BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
