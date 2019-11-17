@@ -22,7 +22,7 @@ steps:
     restoreSolution: 'ServiceProxy/ServiceProxy.csproj'
     feedsToUse: 'config'
     nugetConfigPath: 'NuGet.Config'
-    restoreDirectory: 'packages'
+    restoreDirectory: '$(System.DefaultWorkingDirectory)/packages'
 
 
 - task: DotNetCoreCLI@2
