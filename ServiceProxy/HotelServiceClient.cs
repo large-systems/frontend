@@ -32,6 +32,11 @@ namespace ServiceProxy
             return Channel.EchoTest(input);
         }
 
+        public List<HotelDetails> FindAvailableHotels(DateTime startDate, DateTime endDate, int numRooms, string city)
+        {
+            return Channel.FindAvailableHotels(startDate, endDate, numRooms, city);
+        }
+
         public BookingDetails FindBookingByid(BookingIdentifier bookingIdentifier)
         {
             return Channel.FindBookingByid(bookingIdentifier);

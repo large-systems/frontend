@@ -105,5 +105,10 @@ namespace DummyInMemoryService
         {
             throw new NotImplementedException();
         }
+
+        public List<HotelDetails> FindAvailableHotels(DateTime startDate, DateTime endDate, int numRooms, string city)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
