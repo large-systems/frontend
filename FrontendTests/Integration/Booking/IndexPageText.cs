@@ -21,7 +21,7 @@ namespace FrontendTests.Integration.Booking
             Assert.NotNull(doc.QuerySelector("form"));
             var createBtn = doc.QuerySelector("form a");
             Assert.NotNull(createBtn);
-            Assert.Equal("Create New", createBtn.TextContent.ToString());
+            Assert.Equal("Search Availability", createBtn.TextContent.ToString());
         }
 
     }
