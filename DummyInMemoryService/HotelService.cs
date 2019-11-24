@@ -265,11 +265,6 @@ namespace DummyInMemoryService
         return new List<BookingDetails>();
     }
 
-    public List<RoomDetails> FindRooms(DateTime date, HotelIdentifier hotel, string roomType)
-    {
-      throw new NotImplementedException();
-    }
-
     public List<HotelDetails> FindAvailableHotels(DateTime startDate, DateTime endDate, int numRooms, string city)
     {
       List<HotelDetails> hotels = GetList().AsQueryable().Where(x => x.City.ToLower() == city.ToLower()).ToList();
@@ -277,5 +272,9 @@ namespace DummyInMemoryService
       return hotels;
     }
 
-  }
+        public List<RoomDetails> FindRooms(HotelIdentifier hotel, DateTime startDate, DateTime endDate, string roomType)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

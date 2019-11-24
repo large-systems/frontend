@@ -7,7 +7,6 @@ using System.ServiceModel;
 using HotelSystem.Exception;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using HotelDetails = HotelSystem_Frontend.Models.HotelDetails;
 
 namespace HotelSystem_Frontend.Controllers
 {
@@ -59,12 +58,6 @@ namespace HotelSystem_Frontend.Controllers
       return View(details);
     }
 
-    [Route("Create")]
-    public IActionResult Create()
-    {
-      return View();
-    }
-
     [Route("cancel/{id}")]
     public IActionResult Create([FromRoute(Name = "id")]int id)
     {
@@ -98,6 +91,7 @@ namespace HotelSystem_Frontend.Controllers
         TempData["endDate"] = endDate;
         TempData["numberGuest"] = numberGuest;
         TempData["numberRooms"] = numberRooms;
+        TempData["city"] = city;
         hotels = _hotelClient.FindAvailableHotels(startDate, endDate, numberRooms, city);
       }
       return View(hotels);
@@ -106,8 +100,11 @@ namespace HotelSystem_Frontend.Controllers
     [Route("Book")]
     public IActionResult Book(int id)
     {
-      var rooms = GetRoomFromHotel(id);
-
+        List<RoomDetails> rooms = _hotelClient.FindRooms(new HotelIdentifier(id),
+                (DateTime)TempData["startDate"], 
+                (DateTime)TempData["endDate"] , 
+                "");
+            
       TempData["hotelId"] = id;
       TempData.Keep();
 
@@ -161,11 +158,21 @@ namespace HotelSystem_Frontend.Controllers
         };
 
         if (!ModelState.IsValid)
+        {
+          ViewData["error"] = "One or more fields were invalid";
           return View();
+        }
         else
         {
-          _hotelClient.CreateBooking(startDate, endDate, numberGuest, listOfRooms, passportNumber, guestNumber);
-          TempData["success_added"] = "Booking  added successfully!";
+          try
+          {
+            _hotelClient.CreateBooking(startDate, endDate, numberGuest, listOfRooms, passportNumber, guestNumber);
+            TempData["success"] = "Booking added successfully!";
+          }
+          catch (FaultException e) when (e is FaultException<RoomNotAvailableException>)
+          {
+            TempData["error"] = "One ore more of the requested rooms are no longer available.";
+          }
           return RedirectToAction("Index");
         }
       }
@@ -173,84 +180,5 @@ namespace HotelSystem_Frontend.Controllers
       return View();
     }
 
-    private static Dictionary<int, List<RoomDetails>> GetAllRooms()
-    {
-      var richmondRoomsDetails = new List<RoomDetails>()
-      {
-         new RoomDetails(704){
-           ID = 704,
-            RoomType = "Single",
-           Price  = 670.00,
-           Capacity = 2
-        },
-         new RoomDetails(705){
-           ID = 702,
-            RoomType = "Single",
-           Price  = 670.00,
-           Capacity = 2
-        },
-         new RoomDetails(706){
-           ID = 706,
-            RoomType = "Single",
-           Price  = 670.00,
-           Capacity = 2
-        }
-      };
-      var marinaRoomsDetails = new List<RoomDetails>()
-      {
-         new RoomDetails(1584){
-           ID = 1584,
-            RoomType = "Single",
-           Price  = 670.00,
-           Capacity = 2
-        } ,
-        new RoomDetails(1012){
-           ID = 1012,
-            RoomType = "Single",
-           Price  = 670.00,
-           Capacity = 2
-        },
-           new RoomDetails(1010){
-           ID = 1010,
-            RoomType = "Single",
-           Price  = 670.00,
-           Capacity = 2
-        }
-      };
-      var cabinRoomsDetails = new List<RoomDetails>()
-      {
-            new RoomDetails(904){
-           ID = 904,
-            RoomType = "Single",
-           Price  = 670.00,
-           Capacity = 2
-        },
-             new RoomDetails(905){
-           ID = 905,
-            RoomType = "Single",
-           Price  = 670.00,
-           Capacity = 2
-        },
-      };
-
-      var hotel_rooms = new Dictionary<int, List<RoomDetails>>()
-      {
-        {1, richmondRoomsDetails },
-        {2, marinaRoomsDetails },
-        {3, cabinRoomsDetails }
-      };
-
-      return hotel_rooms;
-    }
-    private IEnumerable<RoomDetails> GetRoomFromHotel(int holetId)
-    {
-      List<RoomDetails> hotel_rooms = null;
-      var rooms = GetAllRooms();
-      if (rooms.ContainsKey(holetId))
-      {
-        hotel_rooms = rooms[holetId];
-      }
-      return hotel_rooms;
-    }
   }
 }

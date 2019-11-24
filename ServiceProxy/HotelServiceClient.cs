@@ -47,9 +47,9 @@ namespace ServiceProxy
             return Channel.FindBookings(passPortNUmber);
         }
 
-        public List<RoomDetails> FindRooms(DateTime date, HotelIdentifier hotel, string roomType)
+        public List<RoomDetails> FindRooms(HotelIdentifier hotel, DateTime startDate, DateTime endDate, string roomType)
         {
-            return Channel.FindRooms(date, hotel, roomType);
+            return Channel.FindRooms(hotel, startDate, endDate, roomType);
         }
     }
 }
