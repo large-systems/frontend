@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using DummyInMemoryService;
 using HotelInterface.Interface;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +48,19 @@ namespace HotelSystem_Frontend
             }
             else
             {
+                app.UseExceptionHandler(builder =>
+                {
+                    builder.Run(async context =>
+                    {
+                        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                        if (contextFeature != null)
+                        {
+                            var client = new TelemetryClient();
+                            client.TrackException(contextFeature.Error);
+                            client.Flush();
+                        }
+                    });
+                });
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
@@ -71,7 +87,15 @@ namespace HotelSystem_Frontend
             else
             {
                 // TODO binding should also be bassed in from config
-                var binding = new BasicHttpBinding();
+                Binding binding;
+                if (serviceUrl.Contains("https"))
+                {
+                    binding = new BasicHttpsBinding();
+                }
+                else
+                {
+                    binding = new BasicHttpBinding();
+                }
                 var address = new EndpointAddress(serviceUrl);
                 return new HotelServiceClient(binding, address);
             }
