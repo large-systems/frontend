@@ -1,0 +1,35 @@
+﻿@model IEnumerable<HotelInterface.DTOs.RoomDetails>
+
+  @{
+    ViewData["Title"] = "Book";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+  } 
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Room Nr.</th>
+        <th>Price</th>
+        <th>Room Type</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var item in Model)
+      {
+      <tr>
+        <td>
+          @Html.DisplayFor(modelItem => item.ID)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.RoomType)
+        </td>
+        <td>
+          @Html.ActionLink("Book Now", "CreateBooking", new {  id=item.ID })
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
