@@ -1,0 +1,63 @@
+﻿<section class="section bg-light pb-0">
+    <div class="container">
+        <div class="row check-availabilty" id="next">
+            <div>
+                @using (Html.BeginForm("SearchAvailability", "Booking", FormMethod.Post, new { @class = "form-inline" }))
+                {
+                    <div class="row">
+                        <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+                            <label for="city" class="font-weight-bold text-black">City</label>
+                            <div class="field-icon-wrap">
+                                @Html.TextBox("city", null, new { placeholder = "e.g Odense", @class = "form-control" })
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+                            <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
+                            <div>
+                                @Html.TextBox("checkin_date", null, new { @class = "form-control datepicker" })
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+                            <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
+                            <div>
+                                @Html.TextBox("checkout_date", null, new { @class = " form-control datepicker" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+                            <div>
+                                <span><i class="fa fa-suitcase"></i><span id="numberNight"></span></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3 mb-md-0 col-lg-3">
+                            <div class="row">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label for="number_guest" class="font-weight-bold text-black">Adults</label>
+                                    <div class="field-icon-wrap">
+                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                        @Html.DropDownList("numberGuest", Enumerable.Range(1, 5).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+
+                                    </div>
+                                    <input type="hidden" value="" id="SelectedNumberGuestText" name="SelectedNumberGuestText">
+                                </div>
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label for="number_room" class="font-weight-bold text-black">Rooms</label>
+                                    <div class="field-icon-wrap">
+                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                        @Html.DropDownList("numberOfRooms", Enumerable.Range(1, 5).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
+                                    </div>
+                                    <input type="hidden" value="" id="SelectedNumberOfRoomsText" name="SelectedNumberOfRoomsText">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 align-self-end">
+                            <button class="btn btn-primary btn-block text-white">Check Availabilty</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div><br/>
+</section>

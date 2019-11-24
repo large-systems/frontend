@@ -1,0 +1,40 @@
+﻿
+@{
+  ViewData["Title"] = "CreateBooking";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Booking</h2>
+<section class="section bg-light pb-0">
+  <div class="container">
+    <div class="row">
+      <div>
+        @using (Html.BeginForm("CreateBooking", "Booking", FormMethod.Post, new { @class = "form-inline" }))
+        {
+          <div class="row">
+            <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+              <label for="passport" class="font-weight-bold text-black">Passport</label>
+              <div class="field-icon-wrap">
+                @Html.TextBox("passportNumber", null, new { placeholder = "e.g Enter Passport Number", @class = "form-control" })
+
+              </div>
+            </div>
+            <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+              <label for="guestNumber" class="font-weight-bold text-black">Guest Number</label>
+              <div class="field-icon-wrap">
+                @Html.TextBox("guestNumber", null, new { placeholder ="e.g +45 22222222", @class = "form-control" })
+
+              </div>
+            </div>
+               <div class="col-md-6 col-lg-3 align-self-end">
+              <button class="btn btn-primary btn-block text-white">Save</button>
+            </div>
+          </div>
+        }
+      </div>
+
+    </div>
+  </div>
+</section>
+
+

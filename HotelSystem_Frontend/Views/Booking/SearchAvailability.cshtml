@@ -1,0 +1,41 @@
+﻿@model IEnumerable<HotelInterface.DTOs.HotelDetails>
+
+<P>Search For Availabity</P>
+<div>
+  @await Html.PartialAsync("_SearchAvailabilityView")
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      @if (Model != null)
+      {
+
+        <div class="card mb-3">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="~/images/hotel1.jpg" class="card-img" alt="My Pic">
+            </div>
+            <div class="col-md-8">
+              @foreach (var item in Model)
+              {
+              <div class="card-body">
+                <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                <p class="card-text">@Html.DisplayFor(modelItem => item.Address) , @Html.DisplayFor(modelItem => item.City)</p>               
+               
+                <p class="btn btn-success"> @Html.ActionLink("Choose Room", "Book", new {  id=item.ID })</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+      </tr>
+  </tbody>
+</table>
+
+
